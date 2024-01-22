@@ -1,9 +1,9 @@
 package org.efimov.servlet;
 
 import org.efimov.Handler;
+import org.efimov.config.JavaConfig;
 import org.efimov.controller.PostController;
-import org.efimov.repository.PostRepositoryRecord;
-import org.efimov.service.PostService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,15 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+
 public class MainServlet extends HttpServlet {
     private final Map<String, Map<String, Handler>> handlers = new ConcurrentHashMap<>();
     private PostController controller;
 
     @Override
     public void init() {
-        final var repository = new PostRepositoryRecord();
-        final var service = new PostService(repository);
-        controller = new PostController(service);
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(JavaConfig.class);
+        controller = context.getBean(PostController.class);
         addHandler("GET", "/api/posts", ((path, req, resp) -> controller.all(resp)));
         addHandler("GET", "/api/posts/", ((path, req, resp) -> {
             final var id = Long.parseLong(path.substring(path.lastIndexOf("/") + 1));
@@ -27,7 +27,7 @@ public class MainServlet extends HttpServlet {
         }));
         addHandler("POST", "/api/posts", ((path, req, resp) -> controller.save(req.getReader(), resp)));
         addHandler("DELETE", "/api/posts/", ((path, req, resp) -> {
-            long id = Long.parseLong(path.substring(path.lastIndexOf("/") + 1));
+            long id = Long.parseLong(path.substring(path.lastIndexOf("/")+1));
             controller.removeById(id, resp);
         }));
     }
@@ -56,7 +56,7 @@ public class MainServlet extends HttpServlet {
         }
     }
 
-    public void addHandler(String method, String path, Handler handler) {
+    private void addHandler(String method, String path, Handler handler) {
         Map<String, Handler> map = new ConcurrentHashMap<>();
         if (handlers.containsKey(method)) {
             map = handlers.get(method);
