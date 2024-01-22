@@ -1,12 +1,13 @@
 package org.efimov.repository;
 
 import org.efimov.model.Post;
+import org.springframework.stereotype.Repository;
 
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-
+@Repository
 public class PostRepositoryRecord implements PostRepository {
     private static final Map<Long, Post> storageMap = new ConcurrentHashMap<>();
     private final AtomicLong idCounter = new AtomicLong(0);

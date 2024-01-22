@@ -3,11 +3,12 @@ package org.efimov.service;
 import org.efimov.exception.NotFoundException;
 import org.efimov.model.Post;
 import org.efimov.repository.PostRepository;
-import org.efimov.repository.PostRepositoryRecord;
+
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Service
 public class PostService {
     private final PostRepository repository;
 

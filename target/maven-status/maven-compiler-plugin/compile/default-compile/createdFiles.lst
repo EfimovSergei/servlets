@@ -1,7 +1,6 @@
 org\efimov\model\Post.class
 org\efimov\service\PostService.class
 org\efimov\controller\PostController.class
-org\efimov\config\JavaConfig.class
 org\efimov\Handler.class
 org\efimov\Main.class
 org\efimov\repository\PostRepository.class
