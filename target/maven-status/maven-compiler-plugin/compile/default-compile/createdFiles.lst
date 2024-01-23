@@ -1,7 +1,7 @@
 org\efimov\model\Post.class
 org\efimov\service\PostService.class
 org\efimov\controller\PostController.class
-org\efimov\Handler.class
+org\efimov\Handler\Handler.class
 org\efimov\repository\PostRepository.class
 org\efimov\repository\PostRepositoryRecord.class
 org\efimov\exception\NotFoundException.class
