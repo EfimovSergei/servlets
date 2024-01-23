@@ -1,9 +1,8 @@
 package org.efimov.servlet;
 
-import org.efimov.Handler;
+import org.efimov.Handler.Handler;
 import org.efimov.controller.PostController;
-import org.efimov.repository.PostRepositoryRecord;
-import org.efimov.service.PostService;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.servlet.http.HttpServlet;
@@ -20,9 +19,8 @@ public class MainServlet extends HttpServlet {
     @Override
     public void init() {
 
-        final var repository = new PostRepositoryRecord();
-        final var service = new PostService(repository);
-        controller = new PostController(service);
+        final var context = new AnnotationConfigApplicationContext("org.efimov");
+        controller = context.getBean(PostController.class);
 
         addHandler("GET", "/api/posts", ((path, req, resp) -> controller.all(resp)));
         addHandler("GET", "/api/posts/", ((path, req, resp) -> {

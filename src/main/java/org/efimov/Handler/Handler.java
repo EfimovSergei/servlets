@@ -1,4 +1,4 @@
-package org.efimov;
+package org.efimov.Handler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
